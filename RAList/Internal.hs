@@ -92,7 +92,6 @@ infixl 3 =:
 (=:) :: RAList a -> Int -> a -> RAList a
 (=:) = update
 
-
 -- | The strict version of (=:). O (log n)
 infixl 3 =:!
 (=:!) :: RAList a -> Int -> a -> RAList a
