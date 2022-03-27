@@ -1,6 +1,7 @@
 module RBTree.Internal where
 
-import           Data.List
+import           Control.Monad.Trans.State
+import           Data.List (nub)
 
 -- | Red-Black Tree.
 data RBTree a = E | N { colour_ :: Colour
@@ -55,3 +56,14 @@ balance tree = case tree of
   N B a x (N R (N R b y c) z d) -> N R (N B a x b) y (N B c z d)
   N B a x (N R b y (N R c z d)) -> N R (N B a x b) y (N B c z d)
   _                             -> tree
+
+-- | Convert a list to ab "RBTree".
+fromList :: Ord a => [a] -> RBTree a
+fromList = foldr insert E
+
+-- | Convert an "RBTree" to a list.
+toList :: Ord a => RBTree a -> [a]
+toList = flip execState [] . go
+  where
+    go (N _ l v r) = go r >> modify (v :) >> go l
+    go E           = pure ()
