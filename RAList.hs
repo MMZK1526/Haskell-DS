@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 
 -- Random Access List with amortised O(1) prepending and O(log n) random
 -- access.

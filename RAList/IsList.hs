@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeFamilies #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 
 module RAList.IsList where
 

@@ -68,7 +68,7 @@ infixl 9 !
 -- | Safely accesses the ith element of a @RAList@. O(log n).
 infixl 8 !?
 (!?) :: RAList a -> Int -> Maybe a
-RAList _ ts !? i = go ts i
+RAList _ trees !? ix = go trees ix
   where
     go (Nothing : ts) i = go ts i
     go (Just t  : ts) i
@@ -110,7 +110,7 @@ update' = ((. const) .) . flip . adjust'
 -- | Adjusts the RAList at the given index by an updating function. If the
 -- index is out of bound, nothing happens. O(log n).
 adjust :: RAList a -> (a -> a) -> Int -> RAList a
-adjust (RAList l ts) f i = RAList l $ go ts i
+adjust (RAList l trees) f ix = RAList l $ go trees ix
   where
     go (Nothing : ts) i = Nothing : go ts i
     go (Just t  : ts) i
@@ -141,7 +141,7 @@ adjust' = (. ap seq) . adjust
 -- consecutive applications of @"cons"@, the total cost is no greater than 2n,
 -- and the amortised cost for each operation is 2n / n = O(1).
 cons :: a -> RAList a -> RAList a
-cons a (RAList l ts) = RAList (l + 1) $ go (Leaf a) ts
+cons a (RAList l trees) = RAList (l + 1) $ go (Leaf a) trees
   where
     go t []             = [Just t]
     go t (Nothing : ts) = Just t : ts
@@ -149,7 +149,7 @@ cons a (RAList l ts) = RAList (l + 1) $ go (Leaf a) ts
 
 -- | Splits a RAList into its first element and rest.
 raSplit :: RAList a -> Maybe (a, RAList a)
-raSplit (RAList l ts) = second (RAList (l - 1)) <$> go Nothing ts
+raSplit (RAList l trees) = second (RAList (l - 1)) <$> go Nothing trees
   where
     go (Just (Leaf a)) ts      = Just (a, ts)
     go (Just (Tree _ t t')) ts = go (Just t) (Just t' : ts)
@@ -193,7 +193,7 @@ treeUpdate (Tree n l r) f i
 
 -- | flattens a Tree to a [].
 flatten :: Tree a -> [a]
-flatten t = go t []
+flatten tree = go tree []
   where
     go (Leaf a) []       = [a]
     go (Leaf a) (t : ts) = a : go t ts
@@ -204,4 +204,4 @@ data RAView a = NIL | a :<: RAList a
 raView :: RAList a -> RAView a
 raView as = case raSplit as of
   Nothing      -> NIL
-  Just (a, as) -> a :<: as
+  Just (a, as') -> a :<: as'
