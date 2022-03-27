@@ -2,7 +2,6 @@ module RBTree.Internal where
 
 import           Control.Monad
 import           Control.Monad.Trans.State
-import           Data.List (nub)
 
 -- | Red-Black Tree.
 data RBTree a = E | N { colour_ :: Colour
@@ -22,17 +21,19 @@ empty = E
 -- | Check if a "RBTree" is valid.
 isValid :: RBTree a -> Bool
 isValid tree = case check tree of
-  Nothing    -> False
-  Just paths -> null . tail . nub $ paths
+  Nothing -> False
+  Just _  -> True
   where
-    check E           = Just [0]
+    check E           = Just (0 :: Int)
     check (N c l _ r) = do
       when (c == R) $ do
         guard (colour l == B)
         guard (colour r == B)
       lCheck <- check l
       rCheck <- check r
-      return $ (+ fromEnum c) <$> (lCheck ++ rCheck)
+      guard (lCheck == rCheck)
+      return $ lCheck + 1
+
     colour E = B
     colour t = colour_ t
 
