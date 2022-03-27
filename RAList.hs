@@ -5,16 +5,16 @@
 -- It also provides popping (removing the first element), but mixing pushing &
 -- popping would have O(log n) complexity in the worst case.
 
-module Gadgets.RAList (
+module RAList (
   RAList(Empty, (:<)), empty, fromList, head, length, update, update', 
   singleton, tail, toList, adjust, adjust', (!), (!?), (><), (=:), (=:!)
 ) where
 
-import           Gadgets.RAList.Internal (
+import           Data.Foldable (fold)
+import           RAList.Internal (
   RAList(..), empty, fromList, head, length, update, update', singleton, tail,
   toList, adjust, adjust', (!), (!?), (><), (=:), (=:!))
-import           Data.Foldable (fold)
-import           Gadgets.RAList.IsList ()
+import           RAList.IsList ()
 import           Prelude hiding (head, length, tail)
 
 instance Functor RAList where

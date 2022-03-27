@@ -2,7 +2,7 @@
 {-# LANGUAGE ViewPatterns #-}
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 
-module Gadgets.RAList.Internal
+module RAList.Internal
   (RAList(Empty, (:<)), empty, fromList, head, length, update, update',
    singleton, tail, toList, adjust, adjust', (!), (!?), (><), (=:), (=:!)
 ) where

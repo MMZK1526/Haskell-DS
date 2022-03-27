@@ -1,9 +1,9 @@
 {-# LANGUAGE TypeFamilies #-}
 
-module Gadgets.RAList.IsList where
+module RAList.IsList where
 
-import           Gadgets.RAList.Internal (RAList(..))
-import qualified Gadgets.RAList.Internal as R
+import           RAList.Internal (RAList(..))
+import qualified RAList.Internal as R
 import           GHC.Exts (IsList(..))
 
 instance IsList (RAList e) where
