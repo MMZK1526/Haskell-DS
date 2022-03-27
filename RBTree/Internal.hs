@@ -1,5 +1,6 @@
 module RBTree.Internal where
 
+import           Control.Monad
 import           Control.Monad.Trans.State
 import           Data.List (nub)
 
@@ -18,16 +19,22 @@ data Colour = R | B
 empty :: RBTree a
 empty = E
 
--- | Check if a "RBTree" is valid, namely 1) rooted with black and 2) any path
--- from the root to a leaf contains the same number of black nodes.
+-- | Check if a "RBTree" is valid.
 isValid :: RBTree a -> Bool
-isValid E = True
-isValid tree
-  | colour_ tree == R = False
-  | otherwise         = null . tail . nub $ pathCounts tree
+isValid tree = case check tree of
+  Nothing    -> False
+  Just paths -> null . tail . nub $ paths
   where
-    pathCounts E = [0]
-    pathCounts (N c l _ r) = (+ fromEnum c) <$> (pathCounts l ++ pathCounts r)
+    check E           = Just [0]
+    check (N c l _ r) = do
+      when (c == R) $ do
+        guard (colour l == B)
+        guard (colour r == B)
+      lCheck <- check l
+      rCheck <- check r
+      return $ (+ fromEnum c) <$> (lCheck ++ rCheck)
+    colour E = B
+    colour t = colour_ t
 
 -- | Check if the "RBTree" contains the given element.
 member :: Ord a => a -> RBTree a -> Bool
