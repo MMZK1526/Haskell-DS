@@ -3,8 +3,8 @@ name: playground
 version: 0.1.0.0
 
 library foo
-    exposed-modules: RAList, PlayGround
-    other-modules: RAList.Internal, RAList.IsList
+    exposed-modules: RAList, RBTree, PlayGround
+    other-modules: RAList.Internal, RAList.IsList, RBTree.Internal
     build-depends: base, transformers >=0.6.0.4
     default-language: Haskell2010
     ghc-options: -O3 -Wall -fwarn-tabs

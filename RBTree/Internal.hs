@@ -14,6 +14,10 @@ data RBTree a = E | N { colour_ :: Colour
 data Colour = R | B
   deriving (Enum, Eq, Ord, Show)
 
+-- | The empty "RBTree".
+empty :: RBTree a
+empty = E
+
 -- | Check if a "RBTree" is valid, namely 1) rooted with black and 2) any path
 -- from the root to a leaf contains the same number of black nodes.
 isValid :: RBTree a -> Bool
@@ -62,7 +66,7 @@ fromList :: Ord a => [a] -> RBTree a
 fromList = foldr insert E
 
 -- | Convert an "RBTree" to a list.
-toList :: Ord a => RBTree a -> [a]
+toList :: RBTree a -> [a]
 toList = flip execState [] . go
   where
     go (N _ l v r) = go r >> modify (v :) >> go l
