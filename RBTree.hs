@@ -10,4 +10,5 @@ import qualified RBTree.Internal as RB
 instance Foldable RBTree where
   foldr _ a E            = a
   foldr f a (N _ l v r)  = foldr f (f v (foldr f a r)) l
+
   toList = RB.toList
