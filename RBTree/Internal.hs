@@ -39,7 +39,7 @@ isValid tree = case check tree of
 
 -- | Check if the "RBTree" contains the given element.
 member :: Ord a => a -> RBTree a -> Bool
-member _ E           = False
+member _ E = False
 member e (N _ l v r)
   | e < v     = member e l
   | e > v     = member e r
