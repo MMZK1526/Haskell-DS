@@ -6,6 +6,7 @@ import           Control.Monad.Trans.Maybe
 import qualified RAList as RA
 import qualified RBTree as RB
 import qualified Treap as T
+import qualified Treap.Random as TR
 
 -- Demonstrate operations with "RAList".
 playRAList :: IO ()
@@ -54,3 +55,17 @@ playTreap = do
   putStrLn $ "Pop out the lowest priority: " ++ show e
   let treap6      = T.delete 2 treap5
   putStrLn $ "The treap after deleting 2: " ++ show (T.toAssoc treap6)
+
+-- | Sorting with randomised "Treap".
+--
+-- With a perfectly balanced tree, our Treap would have a depth of 7.
+-- Since it is randomised, however, the depth is most likely larger, and it is
+-- usually somewhere between 14 and 18.
+--
+-- Try it :)
+playRTreap :: IO ()
+playRTreap = do
+  putStrLn "Sort [127, 126..1] with a randomised Treap..."
+  treap <- TR.fromList [127 :: Int, 126..1]
+  putStrLn $ "The depth of the Treap is " ++ show (T.depth treap) ++ "."
+  putStrLn $ "Sorted: " ++ show (T.toList treap) ++ "."

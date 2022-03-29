@@ -5,14 +5,19 @@ import           Data.Foldable
 
 -- | A "Treap" is both a Binary Tree and a Minimum Heap.
 data Treap p a = E | N { lt_ :: Treap p a
-                     , v_  :: a
-                     , p_  :: p
-                     , rt_ :: Treap p a }
+                       , v_  :: a
+                       , p_  :: p
+                       , rt_ :: Treap p a }
   deriving (Eq, Ord, Show)
 
 -- | The empty "Treap".
 empty :: Treap p a
 empty = E
+
+-- | The depth of a "Treap".
+depth :: Treap p a -> Int
+depth E           = 0
+depth (N l _ _ r) = 1 + max (depth l) (depth r)
 
 -- | Check if the "Treep" contains the given element.
 member :: Ord a => a -> Treap p a -> Bool

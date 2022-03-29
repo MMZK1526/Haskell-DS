@@ -4,7 +4,7 @@ version: 0.1.0.0
 
 library foo
     exposed-modules: RAList, RBTree, Treap, PlayGround
-    other-modules: RAList.Internal, RAList.IsList, RBTree.Internal, Treap.Internal
+    other-modules: RAList.Internal, RAList.IsList, RBTree.Internal, Treap.Internal, Treap.Random
     build-depends: base, transformers, random
     default-language: Haskell2010
     ghc-options: -O3 -Wall -fwarn-tabs
