@@ -5,6 +5,7 @@ import           Control.Monad.Trans.Class
 import           Control.Monad.Trans.Maybe
 import qualified RAList as RA
 import qualified RBTree as RB
+import qualified QuickSort as Q
 import qualified Treap as T
 import qualified Treap.Random as TR
 
@@ -69,3 +70,25 @@ playRTreap = do
   treap <- TR.fromList [127 :: Int, 126..1]
   putStrLn $ "The depth of the Treap is " ++ show (T.depth treap) ++ "."
   putStrLn $ "Sorted: " ++ show (T.toList treap) ++ "."
+
+-- | Use quick-sort.
+playQuickSort :: IO ()
+playQuickSort = do
+  putStrLn "Sort [127, 126..1] with quick-sort."
+  let result = Q.quickSort [127 :: Int, 126..1]
+  putStrLn $ "Sorted: " ++ show result ++ "."
+
+-- | Use quick-sort.
+playQuickSelect :: IO ()
+playQuickSelect = do
+  let list   = [127 :: Int, 126..1]
+  putStrLn "Find the minimum of [127, 126..1] with quick-select."
+  let result1 = Q.quickSelect 0 list
+  putStrLn $ "Result: " ++ show result1 ++ "."
+  putStrLn "Find the tenth smallest element of [127, 126..1] with quick-select."
+  let result2 = Q.quickSelect 10 list
+  putStrLn $ "Result: " ++ show result2 ++ "."
+  putStrLn "Find the maximum of [127, 126..1] with quick-select."
+  let result3 = Q.quickSelect (length list - 1) list
+  putStrLn $ "Result: " ++ show result3 ++ "."
+
